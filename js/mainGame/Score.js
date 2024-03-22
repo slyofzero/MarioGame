@@ -17,7 +17,7 @@ function Score() {
   this.init = function () {
     that.coinScore = 0;
     that.totalScore = 0;
-    that.lifeCount = 1;
+    that.lifeCount = 5;
 
     mainWrapper = view.getMainWrapper();
 
