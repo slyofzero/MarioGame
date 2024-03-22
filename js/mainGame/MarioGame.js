@@ -36,7 +36,7 @@ function MarioGame() {
   var instructionTick = 0; //showing instructions counter
   var that = this;
 
-  this.init = function(levelMaps, level) {
+  this.init = function (levelMaps, level) {
     height = 480;
     maxWidth = 0;
     viewPort = 1280;
@@ -79,7 +79,7 @@ function MarioGame() {
     that.startGame();
   };
 
-  that.calculateMaxWidth = function() {
+  that.calculateMaxWidth = function () {
     //calculates the max width of the game according to map size
     for (var row = 0; row < map.length; row++) {
       for (var column = 0; column < map[row].length; column++) {
@@ -90,20 +90,20 @@ function MarioGame() {
     }
   };
 
-  that.bindKeyPress = function() {
+  that.bindKeyPress = function () {
     var canvas = gameUI.getCanvas(); //for use with touch events
 
     //key binding
-    document.body.addEventListener('keydown', function(e) {
+    document.body.addEventListener("keydown", function (e) {
       keys[e.keyCode] = true;
     });
 
-    document.body.addEventListener('keyup', function(e) {
+    document.body.addEventListener("keyup", function (e) {
       keys[e.keyCode] = false;
     });
 
     //key binding for touch events
-    canvas.addEventListener('touchstart', function(e) {
+    canvas.addEventListener("touchstart", function (e) {
       var touches = e.changedTouches;
       e.preventDefault();
 
@@ -125,7 +125,7 @@ function MarioGame() {
       }
     });
 
-    canvas.addEventListener('touchend', function(e) {
+    canvas.addEventListener("touchend", function (e) {
       var touches = e.changedTouches;
       e.preventDefault();
 
@@ -146,7 +146,7 @@ function MarioGame() {
       }
     });
 
-    canvas.addEventListener('touchmove', function(e) {
+    canvas.addEventListener("touchmove", function (e) {
       var touches = e.changedTouches;
       e.preventDefault();
 
@@ -173,7 +173,7 @@ function MarioGame() {
   };
 
   //Main Game Loop
-  this.startGame = function() {
+  this.startGame = function () {
     animationID = window.requestAnimationFrame(that.startGame);
 
     gameUI.clear(0, 0, maxWidth, height);
@@ -210,12 +210,20 @@ function MarioGame() {
     marioInGround = mario.grounded; //for use with flag sliding
   };
 
-  this.showInstructions = function() {
-    gameUI.writeText('Controls: Arrow keys for direction, shift to run, ctrl for bullets', 30, 30);
-    gameUI.writeText('Tip: Jumping while running makes you jump higher', 30, 60);
+  this.showInstructions = function () {
+    gameUI.writeText(
+      "Controls: Arrow keys for direction, shift to run, ctrl for bullets",
+      30,
+      30
+    );
+    gameUI.writeText(
+      "Tip: Jumping while running makes you jump higher",
+      30,
+      60
+    );
   };
 
-  this.renderMap = function() {
+  this.renderMap = function () {
     //setting false each time the map renders so that elements fall off a platform and not hover around
     mario.grounded = false;
 
@@ -355,7 +363,7 @@ function MarioGame() {
     }
   };
 
-  this.collisionCheck = function(objA, objB) {
+  this.collisionCheck = function (objA, objB) {
     // get the vectors to check against
     var vX = objA.x + objA.width / 2 - (objB.x + objB.width / 2);
     var vY = objA.y + objA.height / 2 - (objB.y + objB.height / 2);
@@ -373,13 +381,13 @@ function MarioGame() {
 
       if (offsetX >= offsetY) {
         if (vY > 0 && vY < 37) {
-          collisionDirection = 't';
+          collisionDirection = "t";
           if (objB.type != 5) {
             //if flagpole then pass through it
             objA.y += offsetY;
           }
         } else if (vY < 0) {
-          collisionDirection = 'b';
+          collisionDirection = "b";
           if (objB.type != 5) {
             //if flagpole then pass through it
             objA.y -= offsetY;
@@ -387,10 +395,10 @@ function MarioGame() {
         }
       } else {
         if (vX > 0) {
-          collisionDirection = 'l';
+          collisionDirection = "l";
           objA.x += offsetX;
         } else {
-          collisionDirection = 'r';
+          collisionDirection = "r";
           objA.x -= offsetX;
         }
       }
@@ -398,10 +406,10 @@ function MarioGame() {
     return collisionDirection;
   };
 
-  this.checkElementMarioCollision = function(element, row, column) {
+  this.checkElementMarioCollision = function (element, row, column) {
     var collisionDirection = that.collisionCheck(mario, element);
 
-    if (collisionDirection == 'l' || collisionDirection == 'r') {
+    if (collisionDirection == "l" || collisionDirection == "r") {
       mario.velX = 0;
       mario.jumping = false;
 
@@ -409,13 +417,13 @@ function MarioGame() {
         //flag pole
         that.levelFinish(collisionDirection);
       }
-    } else if (collisionDirection == 'b') {
+    } else if (collisionDirection == "b") {
       if (element.type != 5) {
         //only if not flag pole
         mario.grounded = true;
         mario.jumping = false;
       }
-    } else if (collisionDirection == 't') {
+    } else if (collisionDirection == "t") {
       if (element.type != 5) {
         mario.velY *= -1;
       }
@@ -425,7 +433,7 @@ function MarioGame() {
         var powerUp = new PowerUp();
 
         //gives mushroom if mario is small, otherwise gives flower
-        if (mario.type == 'small') {
+        if (mario.type == "small") {
           powerUp.mushroom(element.x, element.y);
           powerUps.push(powerUp);
         } else {
@@ -436,7 +444,7 @@ function MarioGame() {
         map[row][column] = 4; //sets to useless box after powerUp appears
 
         //sound when mushroom appears
-        gameSound.play('powerUpAppear');
+        gameSound.play("powerUpAppear");
       }
 
       if (element.type == 11) {
@@ -448,7 +456,7 @@ function MarioGame() {
         map[row][column] = 4; //sets to useless box after powerUp appears
 
         //sound when flower appears
-        gameSound.play('powerUpAppear');
+        gameSound.play("powerUpAppear");
       }
 
       if (element.type == 2) {
@@ -461,61 +469,65 @@ function MarioGame() {
         map[row][column] = 4; //sets to useless box after coin appears
 
         //sound when coin block is hit
-        gameSound.play('coin');
+        gameSound.play("coin");
       }
     }
   };
 
-  this.checkElementPowerUpCollision = function(element) {
+  this.checkElementPowerUpCollision = function (element) {
     for (var i = 0; i < powerUps.length; i++) {
       var collisionDirection = that.collisionCheck(powerUps[i], element);
 
-      if (collisionDirection == 'l' || collisionDirection == 'r') {
+      if (collisionDirection == "l" || collisionDirection == "r") {
         powerUps[i].velX *= -1; //change direction if collision with any element from the sidr
-      } else if (collisionDirection == 'b') {
+      } else if (collisionDirection == "b") {
         powerUps[i].grounded = true;
       }
     }
   };
 
-  this.checkElementEnemyCollision = function(element) {
+  this.checkElementEnemyCollision = function (element) {
     for (var i = 0; i < goombas.length; i++) {
-      if (goombas[i].state != 'deadFromBullet') {
+      if (goombas[i].state != "deadFromBullet") {
         //so that goombas fall from the map when dead from bullet
         var collisionDirection = that.collisionCheck(goombas[i], element);
 
-        if (collisionDirection == 'l' || collisionDirection == 'r') {
+        if (collisionDirection == "l" || collisionDirection == "r") {
           goombas[i].velX *= -1;
-        } else if (collisionDirection == 'b') {
+        } else if (collisionDirection == "b") {
           goombas[i].grounded = true;
         }
       }
     }
   };
 
-  this.checkElementBulletCollision = function(element) {
+  this.checkElementBulletCollision = function (element) {
     for (var i = 0; i < bullets.length; i++) {
       var collisionDirection = that.collisionCheck(bullets[i], element);
 
-      if (collisionDirection == 'b') {
+      if (collisionDirection == "b") {
         //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
         bullets[i].grounded = true;
-      } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
+      } else if (
+        collisionDirection == "t" ||
+        collisionDirection == "l" ||
+        collisionDirection == "r"
+      ) {
         bullets.splice(i, 1);
       }
     }
   };
 
-  this.checkPowerUpMarioCollision = function() {
+  this.checkPowerUpMarioCollision = function () {
     for (var i = 0; i < powerUps.length; i++) {
       var collWithMario = that.collisionCheck(powerUps[i], mario);
       if (collWithMario) {
-        if (powerUps[i].type == 30 && mario.type == 'small') {
+        if (powerUps[i].type == 30 && mario.type == "small") {
           //mushroom
-          mario.type = 'big';
+          mario.type = "big";
         } else if (powerUps[i].type == 31) {
           //flower
-          mario.type = 'fire';
+          mario.type = "fire";
         }
         powerUps.splice(i, 1);
 
@@ -523,20 +535,24 @@ function MarioGame() {
         score.updateTotalScore();
 
         //sound when mushroom appears
-        gameSound.play('powerUp');
+        gameSound.play("powerUp");
       }
     }
   };
 
-  this.checkEnemyMarioCollision = function() {
+  this.checkEnemyMarioCollision = function () {
     for (var i = 0; i < goombas.length; i++) {
-      if (!mario.invulnerable && goombas[i].state != 'dead' && goombas[i].state != 'deadFromBullet') {
+      if (
+        !mario.invulnerable &&
+        goombas[i].state != "dead" &&
+        goombas[i].state != "deadFromBullet"
+      ) {
         //if mario is invulnerable or goombas state is dead, collision doesnt occur
         var collWithMario = that.collisionCheck(goombas[i], mario);
 
-        if (collWithMario == 't') {
+        if (collWithMario == "t") {
           //kill goombas if collision is from top
-          goombas[i].state = 'dead';
+          goombas[i].state = "dead";
 
           mario.velY = -mario.speed;
 
@@ -544,34 +560,38 @@ function MarioGame() {
           score.updateTotalScore();
 
           //sound when enemy dies
-          gameSound.play('killEnemy');
-        } else if (collWithMario == 'r' || collWithMario == 'l' || collWithMario == 'b') {
+          gameSound.play("killEnemy");
+        } else if (
+          collWithMario == "r" ||
+          collWithMario == "l" ||
+          collWithMario == "b"
+        ) {
           goombas[i].velX *= -1;
 
-          if (mario.type == 'big') {
-            mario.type = 'small';
+          if (mario.type == "big") {
+            mario.type = "small";
             mario.invulnerable = true;
             collWithMario = undefined;
 
             //sound when mario powerDowns
-            gameSound.play('powerDown');
+            gameSound.play("powerDown");
 
-            setTimeout(function() {
+            setTimeout(function () {
               mario.invulnerable = false;
             }, 1000);
-          } else if (mario.type == 'fire') {
-            mario.type = 'big';
+          } else if (mario.type == "fire") {
+            mario.type = "big";
             mario.invulnerable = true;
 
             collWithMario = undefined;
 
             //sound when mario powerDowns
-            gameSound.play('powerDown');
+            gameSound.play("powerDown");
 
-            setTimeout(function() {
+            setTimeout(function () {
               mario.invulnerable = false;
             }, 1000);
-          } else if (mario.type == 'small') {
+          } else if (mario.type == "small") {
             //kill mario if collision occurs when he is small
             that.pauseGame();
 
@@ -582,9 +602,9 @@ function MarioGame() {
             score.updateLifeCount();
 
             //sound when mario dies
-            gameSound.play('marioDie');
+            gameSound.play("marioDie");
 
-            timeOutId = setTimeout(function() {
+            timeOutId = setTimeout(function () {
               if (score.lifeCount == 0) {
                 that.gameOver();
               } else {
@@ -598,10 +618,10 @@ function MarioGame() {
     }
   };
 
-  this.checkBulletEnemyCollision = function() {
+  this.checkBulletEnemyCollision = function () {
     for (var i = 0; i < goombas.length; i++) {
       for (var j = 0; j < bullets.length; j++) {
-        if (goombas[i] && goombas[i].state != 'dead') {
+        if (goombas[i] && goombas[i].state != "dead") {
           //check for collision only if goombas exist and is not dead
           var collWithBullet = that.collisionCheck(goombas[i], bullets[j]);
         }
@@ -610,19 +630,19 @@ function MarioGame() {
           bullets[j] = null;
           bullets.splice(j, 1);
 
-          goombas[i].state = 'deadFromBullet';
+          goombas[i].state = "deadFromBullet";
 
           score.totalScore += 1000;
           score.updateTotalScore();
 
           //sound when enemy dies
-          gameSound.play('killEnemy');
+          gameSound.play("killEnemy");
         }
       }
     }
   };
 
-  this.wallCollision = function() {
+  this.wallCollision = function () {
     //for walls (vieport walls)
     if (mario.x >= maxWidth - mario.width) {
       mario.x = maxWidth - mario.width;
@@ -635,12 +655,12 @@ function MarioGame() {
       that.pauseGame();
 
       //sound when mario dies
-      gameSound.play('marioDie');
+      gameSound.play("marioDie");
 
       score.lifeCount--;
       score.updateLifeCount();
 
-      timeOutId = setTimeout(function() {
+      timeOutId = setTimeout(function () {
         if (score.lifeCount == 0) {
           that.gameOver();
         } else {
@@ -651,7 +671,7 @@ function MarioGame() {
   };
 
   //controlling mario with key events
-  this.updateMario = function() {
+  this.updateMario = function () {
     var friction = 0.9;
     var gravity = 0.2;
 
@@ -672,7 +692,7 @@ function MarioGame() {
         }
 
         //sound when mario jumps
-        gameSound.play('jump');
+        gameSound.play("jump");
       }
     }
 
@@ -729,7 +749,7 @@ function MarioGame() {
       mario.speed = 3;
     }
 
-    if (keys[17] && mario.type == 'fire') {
+    if (keys[17] && mario.type == "fire") {
       //ctrl key
       if (!bulletFlag) {
         bulletFlag = true;
@@ -743,9 +763,9 @@ function MarioGame() {
         bullets.push(bullet);
 
         //bullet sound
-        gameSound.play('bullet');
+        gameSound.play("bullet");
 
-        setTimeout(function() {
+        setTimeout(function () {
           bulletFlag = false; //only lets mario fire bullet after 500ms
         }, 500);
       }
@@ -777,7 +797,7 @@ function MarioGame() {
     mario.y += mario.velY;
   };
 
-  this.checkMarioPos = function() {
+  this.checkMarioPos = function () {
     centerPos = translatedDist + viewPort / 2;
 
     //side scrolling as mario reaches center of the viewPort
@@ -787,13 +807,13 @@ function MarioGame() {
     }
   };
 
-  this.levelFinish = function(collisionDirection) {
+  this.levelFinish = function (collisionDirection) {
     //game finishes when mario slides the flagPole and collides with the ground
-    if (collisionDirection == 'r') {
+    if (collisionDirection == "r") {
       mario.x += 10;
       mario.velY = 2;
       mario.frame = 11;
-    } else if (collisionDirection == 'l') {
+    } else if (collisionDirection == "l") {
       mario.x -= 32;
       mario.velY = 2;
       mario.frame = 10;
@@ -811,9 +831,10 @@ function MarioGame() {
         mario.frame = 12;
 
         //sound when stage clears
-        gameSound.play('stageClear');
+        gameSound.play("stageClear");
+        console.log(score.totalScore);
 
-        timeOutId = setTimeout(function() {
+        timeOutId = setTimeout(function () {
           currentLevel++;
           if (originalMaps[currentLevel]) {
             that.init(originalMaps, currentLevel);
@@ -826,23 +847,23 @@ function MarioGame() {
     }
   };
 
-  this.pauseGame = function() {
+  this.pauseGame = function () {
     window.cancelAnimationFrame(animationID);
   };
 
-  this.gameOver = function() {
+  this.gameOver = function () {
     score.gameOverView();
     gameUI.makeBox(0, 0, maxWidth, height);
-    gameUI.writeText('Game Over', centerPos - 80, height - 300);
-    gameUI.writeText('Thanks For Playing', centerPos - 122, height / 2);
+    gameUI.writeText("Game Over", centerPos - 80, height - 300);
+    gameUI.writeText("Thanks For Playing", centerPos - 122, height / 2);
   };
 
-  this.resetGame = function() {
+  this.resetGame = function () {
     that.clearInstances();
     that.init(originalMaps, currentLevel);
   };
 
-  this.clearInstances = function() {
+  this.clearInstances = function () {
     mario = null;
     element = null;
     gameSound = null;
@@ -852,11 +873,11 @@ function MarioGame() {
     powerUps = [];
   };
 
-  this.clearTimeOut = function() {
+  this.clearTimeOut = function () {
     clearTimeout(timeOutId);
   };
 
-  this.removeGameScreen = function() {
+  this.removeGameScreen = function () {
     gameUI.hide();
 
     if (score) {
@@ -864,7 +885,7 @@ function MarioGame() {
     }
   };
 
-  this.showGameScreen = function() {
+  this.showGameScreen = function () {
     gameUI.show();
   };
 }
