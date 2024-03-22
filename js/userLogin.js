@@ -26,7 +26,7 @@ document.getElementById("userNameForm").onsubmit = async function (event) {
     event.preventDefault();
     const name = document.getElementById("userNameInput").value;
 
-    const response = await fetch("http://13.200.13.164:3333/users", {
+    const response = await fetch("https://mario-be.vercel.app/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

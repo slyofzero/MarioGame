@@ -3,7 +3,7 @@ async function updateScore(score) {
     const userId = localStorage.getItem("super-mario-userId");
     console.log(score);
 
-    await fetch(`http://13.200.13.164:3333/users/${userId}`, {
+    await fetch(`https://mario-be.vercel.app/api/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -17,7 +17,7 @@ async function updateScore(score) {
 
 async function fetchLeaderboardData() {
   try {
-    const response = await fetch("http://13.200.13.164:3333/users");
+    const response = await fetch("https://mario-be.vercel.app/api/users");
     if (response.ok) {
       const users = await response.json();
       populateLeaderboard(users);
