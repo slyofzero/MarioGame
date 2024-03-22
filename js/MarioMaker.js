@@ -66,6 +66,7 @@ var MarioMaker = (function () {
 
       map = that.loadMainGameMap();
       that.startGame(map);
+      checkLogin();
     };
 
     this.loadMainGameMap = function () {

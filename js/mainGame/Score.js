@@ -14,24 +14,24 @@ function Score() {
 
   var that = this;
 
-  this.init = function() {
+  this.init = function () {
     that.coinScore = 0;
     that.totalScore = 0;
-    that.lifeCount = 5;
+    that.lifeCount = 1;
 
     mainWrapper = view.getMainWrapper();
 
-    scoreWrapper = view.create('div');
-    coinScoreWrapper = view.create('div');
-    totalScoreWrapper = view.create('div');
-    lifeCountWrapper = view.create('div');
-    levelWrapper = view.create('div');
+    scoreWrapper = view.create("div");
+    coinScoreWrapper = view.create("div");
+    totalScoreWrapper = view.create("div");
+    lifeCountWrapper = view.create("div");
+    levelWrapper = view.create("div");
 
-    view.addClass(scoreWrapper, 'score-wrapper');
-    view.addClass(coinScoreWrapper, 'coin-score');
-    view.addClass(totalScoreWrapper, 'total-score');
-    view.addClass(lifeCountWrapper, 'life-count');
-    view.addClass(levelWrapper, 'level-num');
+    view.addClass(scoreWrapper, "score-wrapper");
+    view.addClass(coinScoreWrapper, "coin-score");
+    view.addClass(totalScoreWrapper, "total-score");
+    view.addClass(lifeCountWrapper, "life-count");
+    view.addClass(levelWrapper, "level-num");
 
     view.append(scoreWrapper, levelWrapper);
     view.append(scoreWrapper, lifeCountWrapper);
@@ -45,34 +45,34 @@ function Score() {
     that.updateLevelNum(1);
   };
 
-  this.updateCoinScore = function() {
+  this.updateCoinScore = function () {
     if (that.coinScore == 100) {
       that.coinScore = 0;
       that.lifeCount++;
       that.updateLifeCount();
     }
 
-    view.setHTML(coinScoreWrapper, 'Coins: ' + that.coinScore);
+    view.setHTML(coinScoreWrapper, "Coins: " + that.coinScore);
   };
 
-  this.updateTotalScore = function() {
-    view.setHTML(totalScoreWrapper, 'Score: ' + that.totalScore);
+  this.updateTotalScore = async function () {
+    view.setHTML(totalScoreWrapper, "Score: " + that.totalScore);
   };
 
-  this.updateLifeCount = function() {
-    view.setHTML(lifeCountWrapper, 'x ' + that.lifeCount);
+  this.updateLifeCount = function () {
+    view.setHTML(lifeCountWrapper, "x " + that.lifeCount);
   };
 
-  this.updateLevelNum = function(level) {
-    view.setHTML(levelWrapper, 'Level: ' + level);
+  this.updateLevelNum = function (level) {
+    view.setHTML(levelWrapper, "Level: " + level);
   };
 
-  this.displayScore = function() {
-    view.style(scoreWrapper, { display: 'block', background: '#add1f3' });
+  this.displayScore = function () {
+    view.style(scoreWrapper, { display: "block", background: "#add1f3" });
   };
 
-  this.hideScore = function() {
-    view.style(scoreWrapper, { display: 'none' });
+  this.hideScore = function () {
+    view.style(scoreWrapper, { display: "none" });
 
     that.coinScore = 0;
     that.lifeCount = 5;
@@ -82,7 +82,7 @@ function Score() {
     that.updateLifeCount();
   };
 
-  this.gameOverView = function() {
-    view.style(scoreWrapper, { background: 'black' });
+  this.gameOverView = function () {
+    view.style(scoreWrapper, { background: "black" });
   };
 }

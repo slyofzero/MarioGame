@@ -470,6 +470,8 @@ function MarioGame() {
 
         //sound when coin block is hit
         gameSound.play("coin");
+        console.log("score update");
+        updateScore(100);
       }
     }
   };
@@ -536,6 +538,8 @@ function MarioGame() {
 
         //sound when mushroom appears
         gameSound.play("powerUp");
+        console.log("score update");
+        updateScore(1000);
       }
     }
   };
@@ -561,6 +565,8 @@ function MarioGame() {
 
           //sound when enemy dies
           gameSound.play("killEnemy");
+          console.log("score update");
+          updateScore(1000);
         } else if (
           collWithMario == "r" ||
           collWithMario == "l" ||
@@ -607,6 +613,7 @@ function MarioGame() {
             timeOutId = setTimeout(function () {
               if (score.lifeCount == 0) {
                 that.gameOver();
+                fetchLeaderboardData();
               } else {
                 that.resetGame();
               }
@@ -637,6 +644,8 @@ function MarioGame() {
 
           //sound when enemy dies
           gameSound.play("killEnemy");
+          console.log("score update");
+          updateScore(1000);
         }
       }
     }
@@ -663,6 +672,7 @@ function MarioGame() {
       timeOutId = setTimeout(function () {
         if (score.lifeCount == 0) {
           that.gameOver();
+          fetchLeaderboardData();
         } else {
           that.resetGame();
         }
